@@ -1,6 +1,13 @@
 FROM ruby:3.2.1
 
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+
+# Set production environment
+ENV RAILS_LOG_TO_STDOUT="1" \
+    RAILS_SERVE_STATIC_FILES="true" \
+    RAILS_ENV="production" \
+    BUNDLE_WITHOUT="development"
+
 WORKDIR /app
 COPY Gemfile Gemfile.lock /app
 RUN bundle install && bundle exec bootsnap precompile --gemfile
@@ -18,4 +25,4 @@ RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
 
 EXPOSE 3000
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
