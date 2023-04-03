@@ -28,7 +28,10 @@ services:
       - DATABASE_PASSWORD=password
       - SECRET_KEY_BASE=DUMMY
     # - REDIS_URL_CACHING=redis://redis:6379/0
-
+  fe:
+    build: ./playground_fe
+    ports:
+      - "80:80"
 
 volumes:
   postgres:
